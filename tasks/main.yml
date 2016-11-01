@@ -1,16 +1,12 @@
 ---
 # tasks file for ansible-ssh
-- name: create .ssh directory
-  file: path=~/.ssh state=directory mode=0700
-  tags:
-    - insert_key
-- name: copy ansible key
-  copy: src="{{public_key.path}}" dest="~/.ssh/authorized_keys" mode=0600
-  register: result
+
+- name: setup authorized_key
+  authorized_key:
+    user: "{{ansible_user_id}}"
+    key: "{{ lookup('file', 'key/ansible.pub') }}"
   notify:
     - disable password login
-  tags:
-    - insert_key
 - name: disable root login
   become: true
   lineinfile:
