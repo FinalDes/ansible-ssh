@@ -4,7 +4,7 @@
 - name: setup authorized_key
   authorized_key:
     user: "{{ansible_user_id}}"
-    key: "{{ lookup('file', 'key/ansible.pub') }}"
+    key: "{{public_key_path}}"
   notify:
     - disable password login
 - name: disable root login
