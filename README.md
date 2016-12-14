@@ -13,13 +13,22 @@ public_key_path: public key location on local server
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+using management machine public key:
 
+```
     - hosts: servers
       roles:
          - role: ansible-ssh
-           public_key_path: /User/ansible/.ssh/ansible.pub
+           public_key_path: "{{ lookup('file', '{{playbook_dir}}/key/ansible.pub') }}"
+```
 
+use public key on remote machine:
+```
+    - hosts: servers
+      roles:
+      - role: ansible-ssh
+        public_key_path: "http://my-site.com/mysite"
+```
 License
 -------
 
