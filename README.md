@@ -6,7 +6,7 @@ My personal ssh server configurations
 Role Variables
 --------------
 
-ansible_user_id: remote server login ID  
+ansible_user_id: remote server login ID
 public_key_path: public key location on local server
 
 
@@ -18,7 +18,6 @@ Including an example of how to use your role (for instance, with variables passe
     - hosts: servers
       roles:
          - role: ansible-ssh
-           ansible_user_id: ansible
            public_key_path: /User/ansible/.ssh/ansible.pub
 
 License
