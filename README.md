@@ -1,4 +1,4 @@
-Ansible SSH
+Ansible SSH [![Build Status](https://travis-ci.org/FinalDes/ansible-ssh.svg?branch=master)](https://travis-ci.org/FinalDes/ansible-ssh)
 =========
 
 My personal ssh server configurations
