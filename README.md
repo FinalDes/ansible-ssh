@@ -16,19 +16,19 @@ Example Playbook
 using management machine public key:
 
 ``` YAML
-    - hosts: servers
-      roles:
-         - role: ansible-ssh
-           public_key_path: "{{ lookup('file', '{{playbook_dir}}/key/ansible.pub') }}"
+  - hosts: servers
+    roles:
+       - role: ansible-ssh
+         public_key_path: "{{ lookup('file', '{{playbook_dir}}/key/ansible.pub') }}"
 ```
 
 use public key on remote machine:
 
 ``` YAML
-    - hosts: servers
-      roles:
-      - role: ansible-ssh
-        public_key_path: "http://my-site.com/mysite"
+  - hosts: servers
+    roles:
+    - role: ansible-ssh
+      public_key_path: "http://my-site.com/mysite"
 ```
 
 License
