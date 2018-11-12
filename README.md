@@ -6,8 +6,8 @@ My personal ssh server configurations
 Role Variables
 --------------
 
-ansible_user_id: remote server login ID  
-public_key_path: public key location on local server
+**ansible_user_id:** remote server login ID  
+**public_key_path:** public key location on local server
 
 Example Playbook
 ----------------
