@@ -15,7 +15,7 @@ Example Playbook
 
 using management machine public key:
 
-```
+``` YAML
     - hosts: servers
       roles:
          - role: ansible-ssh
@@ -23,16 +23,18 @@ using management machine public key:
 ```
 
 use public key on remote machine:
-```
+
+``` YAML
     - hosts: servers
       roles:
       - role: ansible-ssh
         public_key_path: "http://my-site.com/mysite"
 ```
+
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
