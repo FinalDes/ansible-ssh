@@ -11,4 +11,3 @@
   become: true
 - import_tasks: disable-sudo-password.yml
   become: true
-  when: no_sudo_pass
