@@ -8,6 +8,7 @@ Role Variables
 
 **ansible_user_id:** remote server login ID  
 **public_key_path:** public key location on local server
+**no_sudo_pass:** run sudo command without password
 
 Example Playbook
 ----------------
