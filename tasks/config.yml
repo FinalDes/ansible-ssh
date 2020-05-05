@@ -1,40 +1,19 @@
-- name: disable root login
+- name: Update SSH configuration to be more secure
   lineinfile:
-    dest: '/etc/ssh/sshd_config'
-    regexp: '^#?PermitRootLogin'
-    line: 'PermitRootLogin no'
+    dest: /etc/ssh/sshd_config
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
     backrefs: yes
-  notify:
-    - restart sshd
-- name: comment ssh_host_dsa_key
-  lineinfile:
-    dest: '/etc/ssh/sshd_config'
-    regexp: '^HostKey /etc/ssh/ssh_host_dsa_key'
-    line: '#HostKey /etc/ssh/ssh_host_dsa_key'
-    backrefs: yes
-  notify:
-    - restart sshd
-- name: comment ssh_host_ecdsa_key
-  lineinfile:
-    dest: '/etc/ssh/sshd_config'
-    regexp: '^HostKey /etc/ssh/ssh_host_ecdsa_key'
-    line: '#HostKey /etc/ssh/ssh_host_ecdsa_key'
-    backrefs: yes
-  notify:
-    - restart sshd
-- name: uncomment ssh_host_rsa_key
-  lineinfile:
-    dest: '/etc/ssh/sshd_config'
-    regexp: '^#HostKey /etc/ssh/ssh_host_rsa_key'
-    line: 'HostKey /etc/ssh/ssh_host_rsa_key'
-    backrefs: yes
-  notify:
-    - restart sshd
-- name: uncomment ssh_host_ed25519_key
-  lineinfile:
-    dest: '/etc/ssh/sshd_config'
-    regexp: '^#HostKey /etc/ssh/ssh_host_ed25519_key'
-    line: 'HostKey /etc/ssh/ssh_host_ed25519_key'
-    backrefs: yes
+  with_items:
+    - regexp: "^#?PermitRootLogin"
+      line: "PermitRootLogin no"
+    - regexp: "^HostKey /etc/ssh/ssh_host_dsa_key"
+      line: "#HostKey /etc/ssh/ssh_host_dsa_key"
+    - regexp: "^HostKey /etc/ssh/ssh_host_ecdsa_key"
+      line: "#HostKey /etc/ssh/ssh_host_ecdsa_key"
+    - regexp: "^#HostKey /etc/ssh/ssh_host_rsa_key"
+      line: "HostKey /etc/ssh/ssh_host_rsa_key"
+    - regexp: "^#HostKey /etc/ssh/ssh_host_ed25519_key"
+      line: "HostKey /etc/ssh/ssh_host_ed25519_key"
   notify:
     - restart sshd
