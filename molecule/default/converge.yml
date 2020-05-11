@@ -1,7 +1,9 @@
 ---
 - name: Converge
   hosts: all
-  tasks:
-    - name: "Include ansible-ssh"
-      include_role:
-        name: "ansible-ssh"
+  vars:
+    ansible_user: ansible
+  roles:
+  - name: "ansible-ssh"
+    become: true
+    public_key_path: 'https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub'
