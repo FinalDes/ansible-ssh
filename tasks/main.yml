@@ -1,6 +1,13 @@
 ---
 # tasks file for ansible-ssh
-
+- name: Install openssh
+  apt:
+    name: "{{packages}}"
+    state: present
+    update_cache: true
+  vars:
+    packages:
+    - openssh-server
 - name: setup authorized_key
   authorized_key:
     user: "{{ ansible_user_id }}"

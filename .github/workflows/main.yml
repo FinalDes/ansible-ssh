@@ -47,5 +47,5 @@ jobs:
         run: printf '[defaults]\nroles_path=../' >ansible.cfg
       - name: ansible syntax-check
         run: ansible-playbook tests/test.yml -i tests/inventory --syntax-check
-      # - name: Run docker ${{matrix.version}} test
-      #   run: molecule test --scenario-name ${{matrix.version}}
+      - name: molecule test
+        run: molecule test
