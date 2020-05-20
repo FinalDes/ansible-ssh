@@ -7,6 +7,7 @@
     regexp: 'PasswordAuthentication yes'
     line: 'PasswordAuthentication no'
     backrefs: yes
+    validate: sshd -Tf %s
   notify:
     - restart sshd
 - name: restart sshd

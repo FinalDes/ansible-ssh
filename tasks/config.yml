@@ -4,6 +4,7 @@
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     backrefs: yes
+    validate: sshd -Tf %s
   with_items:
     - regexp: "^#?PermitRootLogin"
       line: "PermitRootLogin no"
