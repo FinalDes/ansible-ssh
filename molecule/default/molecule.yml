@@ -5,14 +5,14 @@ driver:
   name: docker
 platforms:
   - name: ubuntu20.04
-    image: finaldes/docker-ubuntu-ansible:bionic-20200403
+    image: finaldes/docker-ubuntu-ansible:focal-20200423
     pre_build_image: true
     command: ""
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
   - name: ubuntu18.04
-    image: finaldes/docker-ubuntu-ansible:bionic-20200403
+    image: finaldes/docker-ubuntu-ansible:bionic-20200403_2
     pre_build_image: true
     command: ""
     volumes:
