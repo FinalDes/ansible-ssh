@@ -6,8 +6,8 @@
     dest: '/etc/ssh/sshd_config'
     regexp: 'PasswordAuthentication yes'
     line: 'PasswordAuthentication no'
+    validate: 'sshd -f %s -T'
     backrefs: yes
-    validate: sshd -Tf %s
   notify:
     - restart sshd
 - name: restart sshd

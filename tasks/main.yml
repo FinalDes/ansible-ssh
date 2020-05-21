@@ -8,6 +8,11 @@
   vars:
     packages:
     - openssh-server
+- name: start sshd service
+  become: true
+  systemd:
+    name: sshd
+    state: started
 - name: setup authorized_key
   authorized_key:
     user: "{{ ansible_user_id }}"

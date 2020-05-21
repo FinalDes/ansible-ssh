@@ -4,10 +4,9 @@
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     backrefs: yes
-    validate: sshd -Tf %s
+    validate: 'sshd -f %s -T'
+  become: true
   with_items:
-    - regexp: "^#?PermitRootLogin"
-      line: "PermitRootLogin no"
     - regexp: "^HostKey /etc/ssh/ssh_host_dsa_key"
       line: "#HostKey /etc/ssh/ssh_host_dsa_key"
     - regexp: "^HostKey /etc/ssh/ssh_host_ecdsa_key"
@@ -16,5 +15,7 @@
       line: "HostKey /etc/ssh/ssh_host_rsa_key"
     - regexp: "^#HostKey /etc/ssh/ssh_host_ed25519_key"
       line: "HostKey /etc/ssh/ssh_host_ed25519_key"
+    - regexp: "^#?PermitRootLogin"
+      line: "PermitRootLogin no"
   notify:
     - restart sshd
