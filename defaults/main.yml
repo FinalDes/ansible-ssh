@@ -1,3 +1,4 @@
 ---
 # defaults file for ansible-ssh
 no_sudo_pass: false
+X11Forwarding: false

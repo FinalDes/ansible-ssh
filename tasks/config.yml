@@ -11,11 +11,37 @@
       line: "#HostKey /etc/ssh/ssh_host_dsa_key"
     - regexp: "^HostKey /etc/ssh/ssh_host_ecdsa_key"
       line: "#HostKey /etc/ssh/ssh_host_ecdsa_key"
-    - regexp: "^#HostKey /etc/ssh/ssh_host_rsa_key"
+    - regexp: "^#?HostKey /etc/ssh/ssh_host_rsa_key"
       line: "HostKey /etc/ssh/ssh_host_rsa_key"
-    - regexp: "^#HostKey /etc/ssh/ssh_host_ed25519_key"
+    - regexp: "^#?HostKey /etc/ssh/ssh_host_ed25519_key"
       line: "HostKey /etc/ssh/ssh_host_ed25519_key"
     - regexp: "^#?PermitRootLogin"
       line: "PermitRootLogin no"
+    - regexp: "^#?PermitEmptyPasswords"
+      line: "PermitEmptyPasswords no"
+    - regexp: "^#?PermitEmptyPasswords"
+      line: "PermitEmptyPasswords no"
+    # - regex: "^#?KexAlgorithms"
+    #   line: KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256
   notify:
     - restart sshd
+- name: guide forward setting
+  block:
+  - name: disable gui forward
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: "#?X11Forwarding"
+      line: "X11Forwarding no"
+      backrefs: yes
+      validate: 'sshd -f %s -T'
+    become: true
+    when: not X11Forwarding
+  - name: enable gui forward
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: "#?X11Forwarding"
+      line: "X11Forwarding no"
+      backrefs: yes
+      validate: 'sshd -f %s -T'
+    become: true
+    when: X11Forwarding
