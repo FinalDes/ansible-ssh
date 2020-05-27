@@ -33,7 +33,7 @@
       stat:
         path: .ssh/authorized_keys
       register: authorized_keys
-    - name: disable password login
+    - name: disable root
       lineinfile:
         dest: /etc/ssh/sshd_config
         regexp: "{{ item.regexp }}"
