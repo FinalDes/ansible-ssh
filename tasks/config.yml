@@ -19,16 +19,46 @@
       line: "PermitRootLogin no"
     - regexp: "^#?PermitEmptyPasswords"
       line: "PermitEmptyPasswords no"
-    - regexp: "^#?PermitEmptyPasswords"
-      line: "PermitEmptyPasswords no"
     - regexp: "^#?ClientAliveInterval"
       line: "ClientAliveInterval 300"
     - regexp: "^#?ClientAliveCountMax"
       line: "ClientAliveCountMax 2"
     - regexp: "^#?TCPKeepAlive"
       line: "TCPKeepAlive no"
-    # - regex: "^#?KexAlgorithms"
-    #   line: KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256
+  notify:
+    - restart sshd
+- name: disable password login
+  block:
+    - name: check public file exists
+      stat:
+        path: .ssh/authorized_keys
+      register: authorized_keys
+    - name: disable password login
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        backrefs: yes
+        validate: 'sshd -f %s -T'
+      become: true
+      with_items:
+       - regexp: "^#PasswordAuthentication"
+         line: "PasswordAuthentication no"
+       - regexp: "^#?PubkeyAuthentication"
+         line: "PubkeyAuthentication yes"
+      when: authorized_keys.stat.exists
+- name: Restrict key exchange, cipher, and MAC algorithms, as per sshaudit.com
+  blockinfile:
+    path: /etc/ssh/sshd_config
+    block: |
+      # Restrict key exchange, cipher, and MAC algorithms, as per sshaudit.com
+      KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256
+      Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+      MACs hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,umac-128-etm@openssh.com
+      HostKeyAlgorithms ssh-ed25519,ssh-ed25519-cert-v01@openssh.com
+    validate: sshd -f %s -T
+    state: present
+  when: rectrict_key_exchange
   notify:
     - restart sshd
 - name: guide forward setting
@@ -38,16 +68,20 @@
       dest: /etc/ssh/sshd_config
       regexp: "#?X11Forwarding"
       line: "X11Forwarding no"
-      backrefs: yes
       validate: 'sshd -f %s -T'
+      firstmatch: true
     become: true
     when: not X11Forwarding
+    notify:
+    - restart sshd
   - name: enable gui forward
     lineinfile:
       dest: /etc/ssh/sshd_config
-      regexp: "#?X11Forwarding"
-      line: "X11Forwarding no"
-      backrefs: yes
+      regexp: "^#?X11Forwarding"
+      line: "X11Forwarding yes"
       validate: 'sshd -f %s -T'
+      firstmatch: true
     become: true
     when: X11Forwarding
+    notify:
+    - restart sshd

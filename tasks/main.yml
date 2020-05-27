@@ -17,8 +17,6 @@
   authorized_key:
     user: "{{ ansible_user_id }}"
     key: "{{ public_key_path }}"
-  notify:
-    - disable password login
 - import_tasks: config.yml
   become: true
 - import_tasks: disable-sudo-password.yml

@@ -19,7 +19,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
   - name: ubuntu16.04
-    image: finaldes/docker-ubuntu-ansible:xenial-20200326
+    image: finaldes/docker-ubuntu-ansible:xenial-20200326_2
     pre_build_image: true
     command: ""
     volumes:
