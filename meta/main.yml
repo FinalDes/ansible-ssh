@@ -2,6 +2,8 @@
 galaxy_info:
   author: Alex Alonso
   description: Personal ssh key server setup
+  namespace: finaldes
+  role_name: ansible_ssh
   # company: your company (optional)
 
   # If the issue tracker for your role is not on github, uncomment the
@@ -17,7 +19,7 @@ galaxy_info:
   # - CC-BY
   license: MIT
 
-  min_ansible_version: 1.2
+  min_ansible_version: "2.4"
 
   # Optionally specify the branch Galaxy will use when accessing the GitHub
   # repo for this role. During role install, if no tags are available,
@@ -35,9 +37,10 @@ galaxy_info:
   platforms:
   - name: Ubuntu
     versions:
-      - 20.04
-      - 18.04
-      - 16.04
+      - jammy
+      - focal
+      - bionic
+      - xenial
   - name: Debian
   #- name: OpenBSD
   #  versions:

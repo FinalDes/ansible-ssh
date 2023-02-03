@@ -1,5 +1,5 @@
 ---
 # defaults file for ansible-ssh
 no_sudo_pass: false
-X11Forwarding: false
+X11Forwarding: false # noqa: var-naming
 rectrict_key_exchange: false

@@ -1,5 +1,5 @@
 - name: Update SSH configuration to be more secure
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/ssh/sshd_config
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
@@ -27,14 +27,14 @@
       line: "TCPKeepAlive no"
   notify:
     - restart sshd
-- name: disable password login
+- name: Disable password login
   block:
-    - name: check public file exists
-      stat:
+    - name: Check public file exists
+      ansible.builtin.stat:
         path: .ssh/authorized_keys
       register: authorized_keys
-    - name: disable root
-      lineinfile:
+    - name: Disable root
+      ansible.builtin.lineinfile:
         dest: /etc/ssh/sshd_config
         regexp: "{{ item.regexp }}"
         line: "{{ item.line }}"
@@ -48,7 +48,7 @@
          line: "PubkeyAuthentication yes"
       when: authorized_keys.stat.exists
 - name: Restrict key exchange, cipher, and MAC algorithms, as per sshaudit.com
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /etc/ssh/sshd_config
     block: |
       # Restrict key exchange, cipher, and MAC algorithms, as per sshaudit.com
@@ -61,10 +61,10 @@
   when: rectrict_key_exchange
   notify:
     - restart sshd
-- name: guide forward setting
+- name: Guide forward setting
   block:
-  - name: disable gui forward
-    lineinfile:
+  - name: Disable gui forward
+    ansible.builtin.lineinfile:
       dest: /etc/ssh/sshd_config
       regexp: "#?X11Forwarding"
       line: "X11Forwarding no"
@@ -74,8 +74,8 @@
     when: not X11Forwarding
     notify:
     - restart sshd
-  - name: enable gui forward
-    lineinfile:
+  - name: Enable gui forward
+    ansible.builtin.lineinfile:
       dest: /etc/ssh/sshd_config
       regexp: "^#?X11Forwarding"
       line: "X11Forwarding yes"

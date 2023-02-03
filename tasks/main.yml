@@ -1,23 +1,25 @@
 ---
 # tasks file for ansible-ssh
 - name: Install openssh
-  apt:
+  ansible.builtin.apt:
     name: "{{ packages }}"
     state: present
     update_cache: true
   vars:
     packages:
     - openssh-server
-- name: start sshd service
+- name: Start sshd service
   become: true
-  systemd:
+  ansible.builtin.systemd:
     name: sshd
     state: started
-- name: setup authorized_key
+- name: Setup authorized_key
   authorized_key:
     user: "{{ ansible_user_id }}"
     key: "{{ public_key_path }}"
-- import_tasks: config.yml
+- name: Config ssh config
+  ansible.builtin.import_tasks: config.yml
   become: true
-- import_tasks: disable-sudo-password.yml
+- name: Disable sudo password
+  ansible.builtin.import_tasks: disable-sudo-password.yml
   become: true
