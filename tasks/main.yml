@@ -14,7 +14,7 @@
     name: sshd
     state: started
 - name: Setup authorized_key
-  authorized_key:
+  ansible.posix.authorized_key:
     user: "{{ ansible_user_id }}"
     key: "{{ public_key_path }}"
 - name: Config ssh config

@@ -41,6 +41,8 @@ jobs:
             ${{ runner.os }}-pip-
       - name: Install dependencies
         run: pip3 install -r requirements.txt
+      - name: Install ansible dependencies
+        run: ansible-galaxy install -r requirements.yml
       - name: check yaml linting
         run: yamllint .
       - name: check ansible lint
