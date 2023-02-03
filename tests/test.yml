@@ -3,4 +3,4 @@
   hosts: all
   remote_user: root
   roles:
-  - finaldes.ansible_ssh
+  - ansible-ssh
