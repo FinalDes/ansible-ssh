@@ -4,10 +4,10 @@
   vars:
     ansible_user: ansible
   roles:
-  - name: "finaldes.ansible-ssh"
-    become: true
-    rectrict_key_exchange: false
-    public_key_path: 'https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub'
+    - role: finaldes.ansible-ssh
+      become: true
+      rectrict_key_exchange: false
+      public_key_path: 'https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub'
   # tasks:
   # - name: install sshaudit
   #   pip:

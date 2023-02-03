@@ -1,5 +1,6 @@
 ---
-- hosts: localhost
+- name: Test
+  hosts: all
   remote_user: root
   roles:
-    - finaldes.ansible-ssh
+  - finaldes.ansible-ssh
