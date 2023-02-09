@@ -26,7 +26,7 @@
     - regexp: "^#?TCPKeepAlive"
       line: "TCPKeepAlive no"
   notify:
-    - restart sshd
+    - Restart sshd
 - name: Disable password login
   block:
     - name: Check public file exists
@@ -60,7 +60,7 @@
     state: present
   when: rectrict_key_exchange
   notify:
-    - restart sshd
+    - Restart sshd
 - name: Guide forward setting
   block:
   - name: Disable gui forward
@@ -73,7 +73,7 @@
     become: true
     when: not X11Forwarding
     notify:
-    - restart sshd
+    - Restart sshd
   - name: Enable gui forward
     ansible.builtin.lineinfile:
       dest: /etc/ssh/sshd_config
@@ -84,4 +84,4 @@
     become: true
     when: X11Forwarding
     notify:
-    - restart sshd
+    - Restart sshd
