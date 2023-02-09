@@ -1,6 +1,7 @@
 ---
 # tasks file for ansible-ssh
 - name: Install openssh
+  become: true
   ansible.builtin.apt:
     name: "{{ packages }}"
     state: present
