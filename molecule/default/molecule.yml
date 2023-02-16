@@ -4,8 +4,16 @@ dependency:
 driver:
   name: docker
 platforms:
+  - name: ubuntu22.04
+    image: finaldes/docker-ubuntu-ansible:jammy-20230215
+    pre_build_image: true
+    cgroupns_mode: host
+    command: ""
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    privileged: true
   - name: ubuntu20.04
-    image: finaldes/docker-ubuntu-ansible:focal-20210226-1810
+    image: finaldes/docker-ubuntu-ansible:focal-20230215
     pre_build_image: true
     cgroupns_mode: host
     command: ""
@@ -13,7 +21,7 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     privileged: true
   - name: ubuntu18.04
-    image: finaldes/docker-ubuntu-ansible:bionic-20210226-1810
+    image: finaldes/docker-ubuntu-ansible:bionic-20230215
     pre_build_image: true
     cgroupns_mode: host
     command: ""
