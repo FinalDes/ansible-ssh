@@ -12,7 +12,7 @@
 - name: Start sshd service
   become: true
   ansible.builtin.systemd:
-    name: sshd
+    name: ssh
     state: started
 - name: Setup authorized_key
   ansible.posix.authorized_key:

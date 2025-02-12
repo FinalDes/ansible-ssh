@@ -26,7 +26,7 @@
     - regexp: "^#?TCPKeepAlive"
       line: "TCPKeepAlive no"
   notify:
-    - Restart sshd
+    - Restart SSH
 - name: Disable password login
   block:
     - name: Check public file exists
@@ -48,19 +48,17 @@
          line: "PubkeyAuthentication yes"
       when: authorized_keys.stat.exists
 - name: Restrict key exchange, cipher, and MAC algorithms, as per sshaudit.com
-  ansible.builtin.blockinfile:
-    path: /etc/ssh/sshd_config
-    block: |
-      # Restrict key exchange, cipher, and MAC algorithms, as per sshaudit.com
-      KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exchange-sha256
-      Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
-      MACs hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,umac-128-etm@openssh.com
-      HostKeyAlgorithms ssh-ed25519,ssh-ed25519-cert-v01@openssh.com
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/ssh-audit_hardening.conf"
+    dest: /etc/ssh/sshd_config.d/ssh-audit_hardening.conf
+    owner: root
+    group: root
+    mode: 600
     validate: sshd -f %s -T
-    state: present
+    checksum: ddd36dd6faebd6f12e39241a23975211b1abef28
   when: rectrict_key_exchange
   notify:
-    - Restart sshd
+    - Restart SSH
 - name: Guide forward setting
   block:
   - name: Disable gui forward
@@ -73,7 +71,7 @@
     become: true
     when: not X11Forwarding
     notify:
-    - Restart sshd
+    - Restart SSH
   - name: Enable gui forward
     ansible.builtin.lineinfile:
       dest: /etc/ssh/sshd_config
@@ -84,4 +82,4 @@
     become: true
     when: X11Forwarding
     notify:
-    - Restart sshd
+    - Restart SSH
