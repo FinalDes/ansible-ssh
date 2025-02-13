@@ -1,10 +1,11 @@
+---
 - name: Update SSH configuration to be more secure
   ansible.builtin.lineinfile:
     dest: /etc/ssh/sshd_config
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
-    backrefs: yes
-    validate: 'sshd -f %s -T'
+    backrefs: true
+    validate: "sshd -f %s -T"
   become: true
   with_items:
     - regexp: "^HostKey /etc/ssh/ssh_host_dsa_key"
@@ -38,14 +39,14 @@
         dest: /etc/ssh/sshd_config
         regexp: "{{ item.regexp }}"
         line: "{{ item.line }}"
-        backrefs: yes
-        validate: 'sshd -f %s -T'
+        backrefs: true
+        validate: "sshd -f %s -T"
       become: true
       with_items:
-       - regexp: "^#PasswordAuthentication"
-         line: "PasswordAuthentication no"
-       - regexp: "^#?PubkeyAuthentication"
-         line: "PubkeyAuthentication yes"
+        - regexp: "^#PasswordAuthentication"
+          line: "PasswordAuthentication no"
+        - regexp: "^#?PubkeyAuthentication"
+          line: "PubkeyAuthentication yes"
       when: authorized_keys.stat.exists
 - name: Restrict key exchange, cipher, and MAC algorithms, as per sshaudit.com
   ansible.builtin.copy:
@@ -53,7 +54,7 @@
     dest: /etc/ssh/sshd_config.d/ssh-audit_hardening.conf
     owner: root
     group: root
-    mode: 600
+    mode: "0600"
     validate: sshd -f %s -T
     checksum: ddd36dd6faebd6f12e39241a23975211b1abef28
   when: rectrict_key_exchange
@@ -61,25 +62,25 @@
     - Restart SSH
 - name: Guide forward setting
   block:
-  - name: Disable gui forward
-    ansible.builtin.lineinfile:
-      dest: /etc/ssh/sshd_config
-      regexp: "#?X11Forwarding"
-      line: "X11Forwarding no"
-      validate: 'sshd -f %s -T'
-      firstmatch: true
-    become: true
-    when: not X11Forwarding
-    notify:
-    - Restart SSH
-  - name: Enable gui forward
-    ansible.builtin.lineinfile:
-      dest: /etc/ssh/sshd_config
-      regexp: "^#?X11Forwarding"
-      line: "X11Forwarding yes"
-      validate: 'sshd -f %s -T'
-      firstmatch: true
-    become: true
-    when: X11Forwarding
-    notify:
-    - Restart SSH
+    - name: Disable gui forward
+      ansible.builtin.lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: "#?X11Forwarding"
+        line: "X11Forwarding no"
+        validate: "sshd -f %s -T"
+        firstmatch: true
+      become: true
+      when: not X11Forwarding
+      notify:
+        - Restart SSH
+    - name: Enable gui forward
+      ansible.builtin.lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: "^#?X11Forwarding"
+        line: "X11Forwarding yes"
+        validate: "sshd -f %s -T"
+        firstmatch: true
+      become: true
+      when: X11Forwarding
+      notify:
+        - Restart SSH

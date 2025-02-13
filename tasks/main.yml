@@ -8,7 +8,7 @@
     update_cache: true
   vars:
     packages:
-    - openssh-server
+      - openssh-server
 - name: Start sshd service
   become: true
   ansible.builtin.systemd:
