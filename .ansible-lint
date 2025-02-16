@@ -1,3 +1,6 @@
 exclude_paths:
-  - tests/
-  - .github/
+
+- .travis.yml
+- tests/
+- .github/
+- .ansible/
