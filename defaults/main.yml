@@ -3,4 +3,4 @@
 no_sudo_pass: false
 X11Forwarding: false # noqa: var-naming
 rectrict_key_exchange: false
-PermitRootLogin: false
+permit_root_login: false
