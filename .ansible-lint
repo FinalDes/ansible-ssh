@@ -4,3 +4,5 @@ exclude_paths:
 - tests/
 - .github/
 - .ansible/
+- .venv/
+- .vscode/
