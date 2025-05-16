@@ -23,18 +23,17 @@ jobs:
         os:
           - ubuntu-24.04
           - ubuntu-22.04
-          - ubuntu-20.04
         python-version:
-          - "3.10"
+          - "3.12"
     steps:
       - uses: actions/checkout@v4.2.2
         # with:
         #   path: molecule_demo
       - name: Set up Python
-        uses: actions/setup-python@v5.4.0
+        uses: actions/setup-python@v5.6.0
         with:
           python-version: ${{matrix.python-version}}
-      - uses: actions/cache@v4.2.0
+      - uses: actions/cache@v4.2.3
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
@@ -55,5 +54,5 @@ jobs:
       - name: molecule test
         run: molecule test
         env:
-          PY_COLORS: '1'
-          ANSIBLE_FORCE_COLOR: '1'
+          PY_COLORS: "1"
+          ANSIBLE_FORCE_COLOR: "1"
