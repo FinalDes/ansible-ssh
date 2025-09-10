@@ -6,7 +6,7 @@
   roles:
     - role: finaldes.ansible_ssh
       become: true
-      rectrict_key_exchange: false
+      restrict_key_exchange: false
       public_key_path: 'https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub'
   # tasks:
   # - name: install sshaudit

@@ -1,0 +1,35 @@
+---
+argument_specs:
+  main:
+    short_description: Harden and configure OpenSSH server and sudo behavior.
+    description:
+      - Install and configure OpenSSH with secure defaults.
+      - Optionally harden crypto algorithms and disable password authentication.
+      - Manage sudo password-less access for the connecting user.
+    options:
+      no_sudo_pass:
+        type: bool
+        default: false
+        description:
+          - If true, create a sudoers rule for the current user with NOPASSWD.
+      X11Forwarding:
+        type: bool
+        default: false
+        description:
+          - Enable X11 (GUI) forwarding via SSH. Off by default for security.
+      restrict_key_exchange:
+        type: bool
+        default: false
+        description:
+          - Deploy hardened ssh-audit configuration limiting key exchange, ciphers, and MACs.
+      permit_root_login:
+        type: bool
+        default: false
+        description:
+          - Allow direct root SSH login. Strongly discouraged; disabled by default.
+      public_key_path:
+        type: str
+        required: false
+        description:
+          - Path to a public key file whose content will be added to the user's authorized_keys.
+          - If undefined, no key is added.

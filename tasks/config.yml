@@ -57,7 +57,7 @@
     mode: "0600"
     validate: sshd -f %s -T
     checksum: ddd36dd6faebd6f12e39241a23975211b1abef28
-  when: rectrict_key_exchange
+  when: restrict_key_exchange
   notify:
     - Restart SSH
 - name: Guide forward setting
