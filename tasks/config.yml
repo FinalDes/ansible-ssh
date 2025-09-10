@@ -26,6 +26,10 @@
       line: "ClientAliveCountMax 2"
     - regexp: "^#?TCPKeepAlive"
       line: "TCPKeepAlive no"
+    - regexp: "^#?PerSourceMaxStartups"
+      line: "PerSourceMaxStartups 1"
+    - regexp: "^#MaxStartups"
+      line: "MaxStartups 10:30:100"
   notify:
     - Restart SSH
 - name: Disable password login
