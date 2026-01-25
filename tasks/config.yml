@@ -30,6 +30,8 @@
       line: "PerSourceMaxStartups 1"
     - regexp: "^#MaxStartups"
       line: "MaxStartups 10:30:100"
+    - regexp: "^#?AllowGroups"
+      line: "AllowGroups sshusers"
   notify:
     - Restart SSH
 - name: Disable password login
