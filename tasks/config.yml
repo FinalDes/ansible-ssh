@@ -62,7 +62,7 @@
     group: root
     mode: "0600"
     validate: sshd -f %s -T
-    checksum: 4850107a24142b73cead8a3fa26510f90d3e06ab
+    checksum: de48fbe6da31271b2e962d1dd4a0090285ac9431
   when: restrict_key_exchange
   notify:
     - Restart SSH
